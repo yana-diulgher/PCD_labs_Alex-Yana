@@ -13,7 +13,7 @@ public class Potok1 implements Runnable {
         this.mas = mas;
         this.vivod = vivod;
     }
-
+// aa
     @Override
     public void run() {
         String imya = Thread.currentThread().getName();
