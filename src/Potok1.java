@@ -17,38 +17,31 @@ public class Potok1 implements Runnable {
     @Override
     public void run() {
         String imya = Thread.currentThread().getName();
-        int pervoe = 0;
-        boolean estPervoe = false;
-        int summa = 0;
-        int kolichestvoPar = 0;
+        int[] chisla = new int[4];
+        int n = 0;
+        int grupp = 0;
 
         for (int i = 0; i < mas.length; i++) {
             if (mas[i] % 2 == 0) {
-                if (!estPervoe) {
-                    pervoe = mas[i];
-                    estPervoe = true;
-                } else {
-                    int vtoroe = mas[i];
-                    int rezultat = pervoe + vtoroe;
-                    summa += rezultat;
-                    kolichestvoPar++;
+                chisla[n] = mas[i];
+                n++;
 
-                    vivod.accept(imya + ": Пара " + kolichestvoPar
-                            + ": " + pervoe + " + " + vtoroe
-                            + " = " + rezultat);
+                if (n == 4) {
+                    int para1 = chisla[0] + chisla[1];
+                    int para2 = chisla[2] + chisla[3];
+                    int summa = para1 + para2;
+                    grupp++;
 
-                    estPervoe = false;
+                    vivod.accept(imya + ": Группа " + grupp + ": (" + chisla[0] + " + " + chisla[1] + ")" + " + (" + chisla[2] + " + " + chisla[3] + ")" + " = " + summa);
+
+                    n = 0;
                 }
             }
         }
-
-        vivod.accept(imya + ": Количество пар: " + kolichestvoPar);
-        vivod.accept(imya + ": Общая сумма результатов пар = " + summa);
-
-        if (estPervoe) {
-            vivod.accept(imya + ": Не использовано одно чётное число: " + pervoe);
+        vivod.accept(imya + ": Обработано групп по две пары: " + grupp);
+        if (n > 0) {
+            vivod.accept(imya + ": Осталось чётных без полной группы: " + n);
         }
-
         vivod.accept(imya + ": Работа завершена");
     }
 }
